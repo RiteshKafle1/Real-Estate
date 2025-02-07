@@ -1,12 +1,23 @@
-const express=require('express')
-const listingRoutes=express.Router()
+const express = require("express");
+const listingRoutes = express.Router();
 
-const {createListing,deleteListing} = require('../Controllers/listing.controller')
-const upload=require('../middlewares/multer')
+const {
+  createListing,
+  deleteListing,
+  updateListing,
+  allListing,
+} = require("../Controllers/listing.controller");
+const upload = require("../middlewares/multer");
+const { checkId } = require("../middlewares/checkId");
 
-listingRoutes.route('/')
-.post(upload.single('image'),createListing)
+listingRoutes
+  .route("/")
+  .post(upload.single("image"), createListing)
+  .get(allListing);
 
-listingRoutes.delete('/:id',deleteListing);
+listingRoutes
+  .route("/:id")
+  .delete(checkId, deleteListing)
+  .put(checkId, updateListing);
 
-module.exports=listingRoutes
+module.exports = listingRoutes;
