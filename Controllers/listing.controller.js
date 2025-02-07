@@ -90,7 +90,18 @@ const createListing = async (req, res, next) => {
     next(error);
   }
 };
-const deleteListing=async(req,res,next)=>{
 
-}
-module.exports = {createListing,deleteListing};
+const deleteListing = async (req, res, next) => {
+  try {
+    const listing = await listingModel.findById(req.params.id);
+    if (!listing) {
+      return next({ statusCode: 400, message: "Listing Not Found." });
+    }
+    await listingModel.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ error: false, message: "Listing deleted." });
+  } catch (error) {
+    console.log("Error in deleteListing", error);
+    next(error);
+  }
+};
+module.exports = { createListing, deleteListing };
