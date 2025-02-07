@@ -90,4 +90,7 @@ const createListing = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = createListing;
+const deleteListing=async(req,res,next)=>{
+
+}
+module.exports = {createListing,deleteListing};
