@@ -161,16 +161,27 @@ const updateListing = async (req, res, next) => {
     next(error);
   }
 };
-const allListing=async(req,res,next)=>{
+const allListing = async (req, res, next) => {
   try {
-    const listings=await listingModel.find({}).sort({name:1}).limit(10)
-    return res.status(200).json({error:false,message:listings})
+    const listings = await listingModel.find({}).sort({ name: 1 }).limit(10);
+    return res.status(200).json({ error: false, message: listings });
+  } catch (error) {
+    console.log("Error in allListing", error);
+    next(error);
+  }
+};
+const searchListing = async (req, res, next) => {
+  try {
     
   } catch (error) {
-    console.log('Error in allListing',error);
+    console.log("Error in searchlisting", error);
     next(error);
-    
   }
-
-}
-module.exports = { createListing, deleteListing, updateListing,allListing };
+};
+module.exports = {
+  createListing,
+  deleteListing,
+  updateListing,
+  allListing,
+  searchListing,
+};

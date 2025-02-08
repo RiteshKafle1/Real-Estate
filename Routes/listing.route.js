@@ -6,6 +6,7 @@ const {
   deleteListing,
   updateListing,
   allListing,
+  searchListing
 } = require("../Controllers/listing.controller");
 const upload = require("../middlewares/multer");
 const { checkId } = require("../middlewares/checkId");
@@ -19,5 +20,7 @@ listingRoutes
   .route("/:id")
   .delete(checkId, deleteListing)
   .put(checkId, updateListing);
+
+listingRoutes.get('/get',searchListing)
 
 module.exports = listingRoutes;
