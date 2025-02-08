@@ -21,6 +21,6 @@ listingRoutes
   .delete(checkId, deleteListing)
   .put(checkId, updateListing);
 
-listingRoutes.get('/get',searchListing)
+listingRoutes.get('/search',searchListing)
 
 module.exports = listingRoutes;

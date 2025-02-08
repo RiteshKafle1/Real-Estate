@@ -7,25 +7,25 @@ const listingSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      maxLength:15,
-      lowecase:true
+
+      lowecase: true,
     },
     description: {
       type: String,
       required: true,
       unique: true,
       trim: true,
-      maxLength:30,
+      maxLength: 30,
     },
     address: {
       type: String,
       required: true,
-      maxLength:15,
+      maxLength: 15,
     },
     price: {
       type: Number,
       required: true,
-      minLength:5,
+      minLength: 5,
     },
     discount: {
       type: Number,
@@ -62,5 +62,5 @@ const listingSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const listingModel=mongoose.model('Listing',listingSchema);
-module.exports=listingModel;
+const listingModel = mongoose.model("Listing", listingSchema);
+module.exports = listingModel;

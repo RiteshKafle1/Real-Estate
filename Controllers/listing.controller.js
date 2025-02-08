@@ -5,7 +5,7 @@ const joi = require("joi");
 const schema = joi.object({
   name: joi
     .string()
-    .max(15)
+
     .required()
     .pattern(new RegExp("^[a-zA-Z]+$"))
     .message(" only alphabetic characters without spaces."),
@@ -172,7 +172,47 @@ const allListing = async (req, res, next) => {
 };
 const searchListing = async (req, res, next) => {
   try {
-    
+    const limit = Number(req.query.limit) || 9;
+
+    // console.log(limit);
+    // console.log(startIndex);
+    let offer = req.query.offer;
+    if (offer === "undefined" || offer === "false") {
+      // match it whether its false or true.
+      offer = { $in: [false, true] };
+    }
+    //console.log(offer);
+    let furnished = req.query.furnished;
+    if (furnished === "undefined" || furnished === "false") {
+      // match it whether its false or true.
+      furnished = { $in: [false, true] };
+    }
+    let parking = req.query.parking;
+    if (parking === "undefined" || parking === "false") {
+      // match it whether its false or true.
+      parking = { $in: [false, true] };
+    }
+    let type = req.query.type;
+    if (type === "undefined" || type === "all") {
+      // match it whether its sale or rent.
+      type = { $in: ["sale", "rent"] };
+    }
+    const searchTerm = req.query.searchTerm || "";
+    const sort = req.query.sort || "createdAt";
+
+    const listings = await listingModel
+      .find({
+        name: { $regex: searchTerm, $options: "i" },
+        offer,
+        furnished,
+        parking,
+        type,
+      })
+      .sort({ [sort]: 1 })
+      .limit(limit);
+    return res.status(200).json({ error: false, listings });
+
+    //console.log(furnished);
   } catch (error) {
     console.log("Error in searchlisting", error);
     next(error);
